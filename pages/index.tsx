@@ -22,12 +22,27 @@ const Home: NextPage = () => {
   const deleteUser = async () => {
     await axios.delete('/api/user');
   };
+  const getAllUsers = async () => await axios.get('/api/users');
 
   const [userData, setUserData] = useState<UserData>({
     datano: '',
     name: '',
     email: '',
   });
+  const [userList, setUserList] = useState<UserData[]>();
+
+  const fetchUserList = async () => {
+    console.log('fetching...');
+    await getAllUsers()
+      .then(res => {
+        console.log('res.data: ', res.data);
+        setUserList(res.data);
+      })
+      .catch(e => console.error(e))
+      .finally(() => {
+        console.log(userList);
+      });
+  };
 
   const targetUserId = 'uxvQXlXuamqEAqVqodQj';
 
@@ -46,7 +61,7 @@ const Home: NextPage = () => {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
-      <form className="flex flex-col gap-8 pb-24" onSubmit={handleSubmit}>
+      {/* <form className="flex flex-col gap-8 pb-24" onSubmit={handleSubmit}>
         <label className="flex w-12 flex-row gap-8">
           Data No.
           <input
@@ -79,11 +94,23 @@ const Home: NextPage = () => {
           value="Submit"
           className="mt-4 w-60 rounded-full bg-purple-500 py-2 px-4 font-bold text-white hover:bg-purple-700"
         />
-      </form>
-      <div className="flex flex-col gap-8 rounded-xl bg-gray-50 p-8">
-        <p className="">{userData.datano}</p>
-        <p className="">{userData.name}</p>
-        <p className="">{userData.email}</p>
+      </form> */}
+      <button
+        className="mt-4 w-60 rounded-full bg-cyan-500 py-2 px-4 font-bold text-white hover:bg-cyan-700"
+        onClick={fetchUserList}>
+        Get All Users
+      </button>
+      <div className="flex w-full flex-row flex-wrap gap-8">
+        {userList &&
+          userList?.map((user, index) => (
+            <div
+              className="flex w-60 flex-col gap-8 rounded-xl bg-gray-50 p-8"
+              key={index}>
+              <p className="">{user.datano}</p>
+              <p className="">{user.name}</p>
+              <p className="">{user.email}</p>
+            </div>
+          ))}
       </div>
       <button
         className="mt-4 w-60 rounded-full bg-green-500 py-2 px-4 font-bold text-white hover:bg-green-700"
