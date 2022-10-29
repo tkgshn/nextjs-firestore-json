@@ -1,18 +1,32 @@
 import type { NextPage } from 'next';
 import axios from 'axios';
 
+type UserData = {
+  datano: string;
+  name: string;
+  email: string;
+  gender?: 'male' | 'female' | 'other';
+};
+
 const Home: NextPage = () => {
   const insertUser = async () => {
     await axios.post('/api/user');
   };
-  const updateUser = async () => {
-    await axios.patch('/api/user');
+  const updateUser = async (userId: string, userData: UserData) => {
+    await axios.patch('/api/user', userData, { params: { userId } });
   };
-  const getUser = async () => {
-    await axios.get('/api/user');
+  const getUser = async (userId: string) => {
+    await axios.get('/api/user', { params: { userId } });
   };
   const deleteUser = async () => {
     await axios.delete('/api/user');
+  };
+  const targetUserId = 'uxvQXlXuamqEAqVqodQj';
+
+  const exampleUserData: UserData = {
+    datano: '012',
+    name: '😀😀😀😀😀😀',
+    email: 'Hoge@example.com',
   };
 
   return (
@@ -24,12 +38,12 @@ const Home: NextPage = () => {
       </button>
       <button
         className="mt-4 w-60 rounded-full bg-yellow-500 py-2 px-4 font-bold text-white hover:bg-yellow-700"
-        onClick={() => updateUser()}>
+        onClick={() => updateUser(targetUserId, exampleUserData)}>
         Update User
       </button>
       <button
         className="mt-4 w-60 rounded-full bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-        onClick={() => getUser()}>
+        onClick={() => getUser(targetUserId)}>
         Get User
       </button>
       <button

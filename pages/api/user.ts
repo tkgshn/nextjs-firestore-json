@@ -16,8 +16,9 @@ export default async function handler(
     });
   }
   const db = getFirestore();
+  const targetDoc = req.query.userId; //書き換える
+  console.log('req: ', req.body);
 
-  const targetDoc = 'uxngvlaMwDc0Ye2WnQhN'; //書き換える
   if (req.method === 'POST') {
     const docRef = db.collection(COLLECTION_NAME).doc();
     const insertData = {
@@ -27,13 +28,8 @@ export default async function handler(
     };
     docRef.set(insertData);
   } else if (req.method === 'PATCH') {
-    const docRef = db.collection(COLLECTION_NAME).doc(targetDoc);
-    const updateData = {
-      datano: '1',
-      name: 'updateSynfo',
-      email: 'updateSynfo@example.com',
-    };
-    docRef.set(updateData);
+    const updateData = req.body;
+    await db.collection(COLLECTION_NAME).doc(targetDoc).set(updateData);
   } else if (req.method === 'GET') {
     const doc = await db.collection(COLLECTION_NAME).doc(targetDoc).get();
     console.log(doc);
