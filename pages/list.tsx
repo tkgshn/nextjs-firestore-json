@@ -1,8 +1,15 @@
 import {useState,useEffect} from 'react'
 import axios from 'axios';
 
+type UserData = {
+    datano: string;
+    name: string;
+    email: string;
+    gender?: 'male' | 'female' | 'other';
+  };
+
 export default function List() {
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState<UserData[]>([]);
   useEffect(() => {
     const fetchUsers = async () => {
       const res = await axios.get('/api/users');

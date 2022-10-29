@@ -1,6 +1,6 @@
 // まずはJSONだけ
 
-export default function index({ posts }) {
+export default function index({ posts }:{posts:any}) {
   return (
     <div>
       <h1>POST一覧</h1>

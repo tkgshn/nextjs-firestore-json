@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchPerson } from "./api/fetcher";
 
+type testUserData = {
+}
+
 function App() {
   const [personID, setPersonID] = useState(1);
   const [error, setError] = useState("");
@@ -23,6 +26,9 @@ function App() {
         Get next person
       </button>
       {error && <p>{error}</p>}
+
+      <p>{personID}</p>
+      <p>{name}</p>
     </div>
   );
 }
