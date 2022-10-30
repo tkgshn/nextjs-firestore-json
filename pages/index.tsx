@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import axios from 'axios';
 import React, { useState } from 'react';
 import useEffect from 'react';
+import Header from "../components/header";
 
 type UserData = {
   datano: string;
@@ -56,7 +57,7 @@ const Home: NextPage = () => {
 
 
 
-  const targetUserId = 'uxvQXlXuamqEAqVqodQj';
+  const targetUserId = 'm3cCtC3x2bg2GPcB5Gwb';
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -73,6 +74,8 @@ const Home: NextPage = () => {
   
 
   return (
+    <>
+    <Header />
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <form className="flex flex-col gap-8 pb-24" onSubmit={handleSubmit}>
         <label className="flex w-12 flex-row gap-8">
@@ -173,6 +176,7 @@ const Home: NextPage = () => {
         Delete User
       </button>
     </div>
+    </>
   );
 };
 

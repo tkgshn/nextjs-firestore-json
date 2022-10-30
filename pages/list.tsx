@@ -1,5 +1,7 @@
-import {useState,useEffect} from 'react'
+import {useState,useEffect} from 'react';
 import axios from 'axios';
+import Header from "../components/header";
+import Link from "next/link";
 
 type UserData = {
     datano: string;
@@ -19,16 +21,21 @@ export default function List() {
   },[])
 
   return (
+    <>
+    <Header />
     <div>
-    <p>サンプル</p>
+    <p>ユーザー一覧</p>
       <ul>
         {users?.map(user => (
-          <li key={user.datano}>
-            <p>名前: {user.name}</p>
-            <p>メールアドレス: {user.email}</p>
+            <li key={user.datano}>
+                <Link href={`user/${encodeURIComponent(user.datano)}`}>
+                    <p>{user.name}</p>
+                </Link>
+                {/* <p>メールアドレス: {user.email}</p> */}
             </li>
         ))}
       </ul>
     </div>
+    </>
   )
 }
